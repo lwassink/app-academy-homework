@@ -5,30 +5,17 @@ class LRUCache
   end
 
   def count
-    # returns number of elements currently in cache
     @cache.count
   end
 
   def add(el)
-    if @cache.include?(el)
-      move_to_end(el)
-    else
-      @cache.shift if count == @size
-      @cache.push(el)
-    end
+    @cache.delete(el) if @cache.include?(el)
+    @cache.shift if count == @size
+    @cache.push(el)
   end
 
   def show
-    # shows the items in the cache, with the LRU item first
     p @cache
-  end
-
-  private
-  # helper methods go here!
-
-  def move_to_end(el)
-    idx = @cache.index(el)
-    @cache = @cache.take(idx) + @cache.drop(idx + 1) + [el]
   end
 end
 
